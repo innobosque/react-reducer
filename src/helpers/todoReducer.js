@@ -1,23 +1,34 @@
 import { types } from "./types";
-export const todoReducer = (state,action) => {
+export const todoReducer = (state, action) => {
   let newState = null;
-  switch(action.type){
+  switch (action.type) {
     case types.add:
-        newState = {
-          ...state,
-          data: [...state.data,action.payload]
-        }
-    break;
-    case types.delete:{
+      const previousData = state?.data ?? [];
       newState = {
         ...state,
-        data: state.data.filter(item=>item.id!==action.payload)
+        data: [...previousData, action.payload]
+      }
+      break;
+    case types.delete: {
+      // const dataReduce = state.data.reduce((previousValue,currentValue)=>{
+      //   if(currentValue.id!==action.payload)
+      //     return [...previousValue, currentValue];
+      //   else
+      //     return [...previousValue];
+      // },[]);
+      const dataReduce = state.data.reduce(
+        (previousValue, currentValue) =>
+          (currentValue.id !== action.payload) ? [...previousValue, currentValue] : [...previousValue],
+        []
+      );
+      newState = {
+        ...state,
+        data: dataReduce
       }
     }
-    break;
+      break;
     default:
       throw new Error(`No se reconoce el tipo ${action.type}`);
-    break;
   }
   return newState;
 }
