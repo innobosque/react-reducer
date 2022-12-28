@@ -6,7 +6,7 @@ export const AppReducer = () => {
   const { loading, state, handleDelete, handleAddTodo } = useData();
   return (
     <main>
-      <h2>Ejemplo de Reducer</h2>
+      <h2>Reducer</h2>
       {/* Loader */}
       <Alert show={loading} variant="danger">
         <div className="d-flex gap-1 align-items-center">
